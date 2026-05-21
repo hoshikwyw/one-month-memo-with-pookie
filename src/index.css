@@ -1,0 +1,17 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Lato', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: #fff0f5;
+  overflow: hidden;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+}
