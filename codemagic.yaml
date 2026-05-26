@@ -29,12 +29,18 @@ workflows:
           cd android
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
     artifacts:
       - android/app/build/outputs/apk/debug/app-debug.apk
     publishing:
       email:
         recipients:
-          - tutustaymm@gmail.com
+          - khaingwutyiwin1712@gmail.com
         notify:
           success: true
           failure: true
@@ -89,7 +95,7 @@ workflows:
     publishing:
       email:
         recipients:
-          - tutustaymm@gmail.com
+          - khaingwutyiwin1712@gmail.com
         notify:
           success: true
           failure: true
