@@ -1,17 +1,41 @@
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── kayv-glass-ui: rose theme variables ─────────────────────
+   The library's ThemeProvider sets data-theme="glass-rose" on
+   <html> but doesn't ship a CSS file with variable definitions.
+   We define them here so all bg-kv-* / text-kv-* classes work.
+   ─────────────────────────────────────────────────────────── */
+:root,
+[data-theme="glass-rose"] {
+  --kv-p-50:  255 241 242;
+  --kv-p-100: 255 228 230;
+  --kv-p-200: 254 205 211;
+  --kv-p-300: 253 164 175;
+  --kv-p-400: 251 113 133;
+  --kv-p-500: 244 63  94;
+  --kv-p-600: 225 29  72;
+  --kv-p-700: 190 18  60;
 }
 
-body {
-  font-family: 'Lato', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  background: #fff0f5;
-  overflow: hidden;
+@layer base {
+  body {
+    background-color: #fff0f5;
+    /* Prevent body scroll — the scroll container handles scrolling */
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
 }
 
-#root {
-  width: 100%;
-  max-width: 100%;
+@layer utilities {
+  /* Combined heartbeat + glow pulsing CTA button.
+     Two animations on one element can't be expressed with two
+     separate animate-* Tailwind classes, so we define a single
+     combined utility here. */
+  .btn-pulse {
+    animation:
+      heartbeat 1.6s ease-in-out infinite,
+      glow      2.4s ease-in-out infinite;
+  }
 }
