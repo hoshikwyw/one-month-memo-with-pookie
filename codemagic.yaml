@@ -5,7 +5,7 @@ workflows:
   # device that allows "Install from unknown sources".
   android-debug:
     name: Android – Debug APK
-    instance_type: linux_x2          # free-tier Linux instance
+    instance_type: mac_mini_m2        # free-tier macOS instance (500 min/month)
     max_build_duration: 30
     environment:
       node: '20'
