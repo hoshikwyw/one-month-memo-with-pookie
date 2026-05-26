@@ -1,0 +1,95 @@
+workflows:
+
+  # ── Android debug APK ────────────────────────────────────────
+  # No signing required. The APK can be side-loaded on any Android
+  # device that allows "Install from unknown sources".
+  android-debug:
+    name: Android – Debug APK
+    instance_type: linux_x2          # free-tier Linux instance
+    max_build_duration: 30
+    environment:
+      node: '20'
+      java: '21'
+    cache:
+      cache_paths:
+        - $HOME/.gradle/caches
+        - $CM_BUILD_DIR/node_modules
+    scripts:
+      - name: Install npm dependencies
+        script: npm ci
+
+      - name: Build web assets
+        script: npm run build
+
+      - name: Sync Capacitor → Android
+        script: npx cap sync android
+
+      - name: Build debug APK
+        script: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+    artifacts:
+      - android/app/build/outputs/apk/debug/app-debug.apk
+    publishing:
+      email:
+        recipients:
+          - tutustaymm@gmail.com
+        notify:
+          success: true
+          failure: true
+
+  # ── iOS development build ────────────────────────────────────
+  # Requires:
+  #   1. Apple Developer account linked in Codemagic → Teams → Integrations
+  #   2. "iOS signing" set to distribution_type: development in the
+  #      Codemagic UI (or fill in the values below).
+  # The resulting .ipa can be installed via Apple Configurator 2 or
+  # shared as a direct download link on registered test devices.
+  ios-dev:
+    name: iOS – Development IPA
+    instance_type: mac_mini_m2       # macOS required for Xcode
+    max_build_duration: 60
+    environment:
+      node: '20'
+      xcode: latest
+      cocoapods: default
+      ios_signing:
+        distribution_type: development
+        bundle_identifier: com.anniversary.chronicles
+    cache:
+      cache_paths:
+        - $HOME/.cocoapods
+        - $CM_BUILD_DIR/node_modules
+    scripts:
+      - name: Install npm dependencies
+        script: npm ci
+
+      - name: Build web assets
+        script: npm run build
+
+      - name: Sync Capacitor → iOS
+        script: npx cap sync ios
+
+      - name: Install CocoaPods dependencies
+        script: |
+          cd ios/App
+          pod install
+
+      - name: Set code-signing profiles
+        script: xcode-project use-profiles
+
+      - name: Build iOS IPA
+        script: |
+          xcode-project build-ipa \
+            --workspace ios/App/App.xcworkspace \
+            --scheme App
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      email:
+        recipients:
+          - tutustaymm@gmail.com
+        notify:
+          success: true
+          failure: true

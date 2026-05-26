@@ -12,6 +12,16 @@ dist
 dist-ssr
 *.local
 
+# Android build outputs (keep project files, ignore build artefacts)
+android/.gradle
+android/app/build
+android/build
+
+# iOS build outputs
+ios/App/Pods
+ios/App/build
+build/ios
+
 # Claude Code
 .claude
 

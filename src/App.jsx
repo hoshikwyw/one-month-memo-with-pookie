@@ -43,7 +43,7 @@ const PINK_GRADIENT = 'linear-gradient(135deg, #f472b6 0%, #ec4899 50%, #db2777 
    ══════════════════════════════════════════════════════════════ */
 function CoverSection({ onOpen }) {
   return (
-    <section className="min-h-[100svh] bg-gradient-to-br from-pink-50 via-fuchsia-50 to-orange-50 flex flex-col items-center justify-center px-6 py-8 relative overflow-hidden">
+    <section className="min-h-[100svh] bg-gradient-to-br from-pink-50 via-fuchsia-50 to-orange-50 flex flex-col items-center justify-center px-6 py-8 safe-top relative overflow-hidden">
       {/* Decorative blur blobs */}
       <div className="absolute -top-16 -left-16 w-52 h-52 rounded-full bg-pink-300/30 blur-[64px] pointer-events-none" />
       <div className="absolute -bottom-20 -right-10 w-64 h-64 rounded-full bg-orange-300/20 blur-[72px] pointer-events-none" />
@@ -276,7 +276,7 @@ function LetterSection() {
   }
 
   return (
-    <section className="min-h-[100svh] bg-gradient-to-b from-yellow-50 via-amber-50 to-pink-50 flex flex-col items-center justify-start px-5 pt-12 pb-28">
+    <section className="min-h-[100svh] bg-gradient-to-b from-yellow-50 via-amber-50 to-pink-50 flex flex-col items-center justify-start px-5 pt-12 pb-28 safe-bottom">
       <div className="text-center mb-6 max-w-xs">
         <Badge variant="warning" size="sm">A Love Letter</Badge>
         <h2 className="font-playfair font-bold text-[1.75rem] text-amber-900 mt-2.5">
